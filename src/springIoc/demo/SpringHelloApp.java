@@ -11,10 +11,14 @@ public class SpringHelloApp {
 
         ClassPathXmlApplicationContext context =  new ClassPathXmlApplicationContext("applicationContext.xml");
 
-      Coach coach =   context.getBean(FootBall.class);
+      Coach coach =   context.getBean("trackCoach",Coach.class);
+//        FootBall footBall =   context.getBean("footballCoach",FootBall.class);
 
-      System.out.println(coach.getDailyWorkOut());
 
+        System.out.println(coach.getDailyWorkOut());
+      System.out.println(coach.getDailyFortune());
+//      System.out.println(footBall.getEmail());
+//      System.out.println(footBall.getName());
       context.close();
     }
 }

@@ -7,15 +7,45 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- load properies file into config -->
+    <context:property-placeholder location="classpath*:sport.properties"></context:property-placeholder>
+
+
+    <bean id="fortuneService"
+          class="springIoc.demo.FortuneServiceImpl"></bean>
 
     <bean id="myCoach"
-          class="springIoc.demo.BaseBallCoach"></bean>
+          class="springIoc.demo.BaseBallCoach">
+        <!-- This is constructor injection-->
+        <constructor-arg ref="fortuneService"></constructor-arg>
+
+    </bean>
 
     <bean id="myLoggerConfig" class="springIoc.demo.MyLoggerConfig" init-method="initLogger">
         <property name="rootLoggerLevel" value="FINE" />
         <property name="printedLoggerLevel" value="FINE"/>
     </bean>
-    <bean id="footballCoach" class="springIoc.demo.FootBall"></bean>
+    <bean id="footballCoach" class="springIoc.demo.FootBall">
+      <!-- This is setter injection-->
+        <property name="fortuneService" ref="fortuneService"></property>
+
+        <!--Inject values directly-->
+<!--        <property name="name" value="Rayan"></property>-->
+<!--        <property name="email" value="rayan.bamari@gmail.com"/>-->
+        <!-- Inject values from file-->
+        <property name="name" value="${foo.name}"></property>
+        <property name="email" value="${foo.email}"></property>
+
+
+    </bean>
+
+    <bean id="trackCoach" class="springIoc.demo.TrackBallCoach">
+
+        <constructor-arg ref="newFortuneService"/>
+
+    </bean>
+    <bean id="newFortuneService" class="springIoc.demo.newFortuneServiceImple"></bean>
+
 
 
 </beans>
